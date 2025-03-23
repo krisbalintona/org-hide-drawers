@@ -9,8 +9,28 @@ This project aims to relieve the visual clutter of some org-mode files by visual
 :END:
 
 :CONTENTS:
+- [[#installation][Installation]]
 - [[#related-packages][Related packages]]
 :END:
+
+* Installation
+:PROPERTIES:
+:CUSTOM_ID: installation
+:END:
+
+This package is currently not available in any package archives. You should download this repository locally then add it to your load path.
+
+Alternatively, if you an Emacs version of at least 29.1, you can use ~package-vc-install~:
+#+begin_src emacs-lisp
+  (unless (package-installed-p 'org-hide-drawers)
+    (package-vc-install '(org-hide-drawers :url "git@github.com:krisbalintona/org-hide-drawers.git"
+                                           :rev :newest)))
+
+  ;; Or with use-package:
+  (use-package org-hide-drawers
+    :vc ( :url "git@github.com:krisbalintona/org-hide-drawers.git"
+          :rev :newest))
+#+end_src
 
 * Related packages
 :PROPERTIES:
