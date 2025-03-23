@@ -6,7 +6,7 @@
 ;; URL: https://github.com/krisbalintona/org-hide-drawers.git
 ;; Keywords: tools, extensions
 ;; Version: 1.0.0
-;; Package-Requires: ((emacs "29.1"))
+;; Package-Requires: ((emacs "24.3"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
