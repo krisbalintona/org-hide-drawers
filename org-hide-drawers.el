@@ -97,6 +97,7 @@ Considers `org-hide-drawers-blacklist'."
                      (member blacklist-prop property-keys))
                    org-hide-drawers-blacklist)))))
 
+;;; Commands
 ;; TODO 2024-10-23: Consider special behavior for top-level drawers.  See
 ;; `org-tidy-should-tidy'.
 (defun org-hide-drawers-create-overlays ()
