@@ -5,7 +5,7 @@
 ;; Author: Kristoffer Balintona <krisbalintona@gmail.com>
 ;; URL: https://github.com/krisbalintona/org-hide-drawers.git
 ;; Keywords: tools, extensions
-;; Version: 1.0.0
+;; Version: 1.0.1
 ;; Package-Requires: ((emacs "24.3"))
 
 ;; This program is free software; you can redistribute it and/or modify
