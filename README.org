@@ -1,7 +1,11 @@
 # -*- eval: (org-make-toc-mode 1); -*-
 #+title: org-hide-drawers
 
+#  LocalWords:  toc
+
 This project aims to relieve the visual clutter of some org-mode files by visually shortening them to a certain string via overlays.
+
+[[file:screenshots/screenshot_1.png]]
 
 * Table of contents
 :PROPERTIES:
