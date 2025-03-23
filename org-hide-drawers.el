@@ -26,7 +26,6 @@
 ;; Hide drawers in org-mode buffers using overlays.
 
 ;;; Code:
-(require 'org)
 (require 'org-element)
 
 ;;; Options
