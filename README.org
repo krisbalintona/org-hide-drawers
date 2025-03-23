@@ -1,0 +1,21 @@
+# -*- eval: (org-make-toc-mode 1); -*-
+#+title: org-hide-drawers
+
+This project aims to relieve the visual clutter of some org-mode files by visually shortening them to a certain string via overlays.
+
+* Table of contents
+:PROPERTIES:
+:TOC:      :include all :force (nothing) :ignore (this) :local (nothing)
+:END:
+
+:CONTENTS:
+- [[#related-packages][Related packages]]
+:END:
+
+* Related packages
+:PROPERTIES:
+:CUSTOM_ID: related-packages
+:END:
+
++ [[https://github.com/jxq0/org-tidy][jxq0/org-tidy]]
+  Org-tidy aims to fulfill the same purpose as this project: hiding overlays in org-mode. However, the implementation is very different. This project's implementation fixes many of [[https://github.com/jxq0/org-tidy/issues][the bugs]] in that package, and affords more flexibility with future features. Importantly, that package's bugs, as far as I can tell, are closely tied to the implementation of org-tidy. To resolve those bugs, in my opinion, would be to rewrite the package to a state very similar to mine.
