@@ -34,7 +34,7 @@
   :group 'org-mode
   :prefix "org-hide-drawers-")
 
-(defcustom org-hide-drawers-string (propertize " #" 'face 'shadow)
+(defcustom org-hide-drawers-display-string (propertize " #" 'face 'shadow)
   "Display string used for overlays."
   :type 'string)
 
@@ -44,7 +44,7 @@ If any property in this option is present in a drawer, it will not be
 hidden."
   :type '(repeat string))
 
-(defcustom org-hide-drawers-top-level-drawers t
+(defcustom org-hide-drawers-hide-top-level t
   "If nil, don't hide top-level property drawers."
   :type 'boolean)
 
@@ -65,7 +65,7 @@ hidden."
               properties)))
     (nreverse properties)))             ; Return the list in original order
 
-(defun org-hide-drawers--should-hide (drawer)
+(defun org-hide-drawers--hide-drawer-p (drawer)
   "Predicate for whether DRAWER should be hidden.
 DRAWER is an org-element.
 
@@ -77,8 +77,8 @@ Considers `org-hide-drawers-blacklist'."
          ;; the buffer
          (top-level-p (= 1 (org-element-property :begin drawer))))
     (and
-     ;; First adhere to the value of `org-hide-drawers-top-level-drawers'
-     (or org-hide-drawers-top-level-drawers (not top-level-p))
+     ;; First adhere to the value of `org-hide-drawers-hide-top-level'
+     (or org-hide-drawers-hide-top-level (not top-level-p))
      ;; Check against properties in the blacklist
      (not (cl-some (lambda (blacklist-prop)
                      (member blacklist-prop property-keys))
@@ -106,7 +106,7 @@ buffer instead."
     ;; Read (info "(elisp) Overlay Properties") for an explanation of overlay
     ;; properties
     (overlay-put ov 'category 'org-hide-drawers)
-    (overlay-put ov 'display org-hide-drawers-string)
+    (overlay-put ov 'display org-hide-drawers-display-string)
     (overlay-put ov 'modification-hooks '((lambda (overlay _after _beg _end)
                                             (delete-overlay overlay))))
     (overlay-put ov 'read-only t)
@@ -117,20 +117,20 @@ buffer instead."
     (overlay-put ov 'isearch-open-invisible-temporary
                  (lambda (overlay hidep)
                    (overlay-put overlay 'invisible hidep)
-                   (overlay-put overlay 'display (when hidep org-hide-drawers-string))))))
+                   (overlay-put overlay 'display (when hidep org-hide-drawers-display-string))))))
 
 ;;; Commands
 ;; TODO 2024-10-23: Consider special behavior for top-level drawers.  See
 ;; `org-tidy-should-tidy'.
-(defun org-hide-drawers-create-overlays ()
+(defun org-hide-drawers-make-overlays ()
   "Conditionally hide org drawers in the current buffer using the org AST.
 Hide every drawer in the current buffer if it satisfies
-`org-hide-drawers--should-hide'."
+`org-hide-drawers--hide-drawer-p'."
   (interactive)
   (let ((ast (org-element-parse-buffer 'element nil)))
     (org-element-map ast '(drawer property-drawer)
       (lambda (drawer)
-        (when (org-hide-drawers--should-hide drawer)
+        (when (org-hide-drawers--hide-drawer-p drawer)
           (let* ((begin (org-element-property :begin drawer))
                  (end (save-excursion
                         (goto-char (org-element-property :end drawer))
@@ -149,7 +149,7 @@ If BUFFER is non-nil, delete overlays in that buffer instead."
   (interactive)
   (if (org-hide-drawers-get-overlays)
       (org-hide-drawers-delete-overlays)
-    (org-hide-drawers-create-overlays)))
+    (org-hide-drawers-make-overlays)))
 
 ;;; Minor mode
 ;;;###autoload
@@ -158,10 +158,10 @@ If BUFFER is non-nil, delete overlays in that buffer instead."
   :lighter " HideDrawers"
   (if org-hide-drawers-mode
       (progn
-        (org-hide-drawers-create-overlays)
-        (add-hook 'after-save-hook #'org-hide-drawers-create-overlays nil t))
+        (org-hide-drawers-make-overlays)
+        (add-hook 'after-save-hook #'org-hide-drawers-make-overlays nil t))
     (org-hide-drawers-delete-overlays)
-    (remove-hook 'after-save-hook #'org-hide-drawers-create-overlays t)))
+    (remove-hook 'after-save-hook #'org-hide-drawers-make-overlays t)))
 
 ;;; Provide
 (provide 'org-hide-drawers)
