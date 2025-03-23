@@ -10,6 +10,8 @@ This project aims to relieve the visual clutter of some org-mode files by visual
 
 :CONTENTS:
 - [[#installation][Installation]]
+- [[#usage][Usage]]
+  - [[#user-options][User options]]
 - [[#related-packages][Related packages]]
 :END:
 
@@ -31,6 +33,30 @@ Alternatively, if you an Emacs version of at least 29.1, you can use ~package-vc
     :vc ( :url "git@github.com:krisbalintona/org-hide-drawers.git"
           :rev :newest))
 #+end_src
+
+* Usage
+:PROPERTIES:
+:CUSTOM_ID: usage
+:END:
+
+1. Open an org buffer.
+2. Enable ~org-hide-drawers-mode~. Drawers are hidden.
+3. Un-hide drawers by calling ~org-hide-drawers-toggle~.
+4. Hide drawers by calling ~org-hide-drawers-toggle~ again.
+
+To see all commands available, do =C-h a org-hide-drawers- RET=, or =M-x apropos-command org-hide-drawers- RET=.
+
+** User options
+:PROPERTIES:
+:CUSTOM_ID: user-options
+:END:
+
+The most notable user options are:
++ ~org-hide-drawers-property-name-blacklist~
++ ~org-hide-drawers-hide-top-level-properties-drawer~
++ ~org-hide-drawers-drawer-name-blacklist~
+
+To see all user options available, do =C-h u org-hide-drawers- RET=, or =M-x apropos-user-option org-hide-drawers- RET=.
 
 * Related packages
 :PROPERTIES:
