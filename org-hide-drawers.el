@@ -125,7 +125,8 @@ various user options to control which drawers are hidden."
   (let* ((drawer-type (org-element-type drawer)))
     (pcase drawer-type
       ('drawer
-       (let ((case-fold-search org-hide-drawers-drawer-name-blacklist-ignore-case-p))
+       (let ((case-fold-search org-hide-drawers-drawer-name-blacklist-ignore-case-p)
+             (drawer-name (org-hide-drawers--get-drawer-name drawer)))
          ;; Check drawer name blacklist
          (not (cl-some (lambda (blacklist-drawer-regexp) (string-match-p blacklist-drawer-regexp drawer-name))
                        org-hide-drawers-drawer-name-blacklist))))
