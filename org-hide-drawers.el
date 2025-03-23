@@ -44,7 +44,7 @@ If any property in this option is present in a drawer, it will not be
 hidden."
   :type '(repeat string))
 
-(defcustom krisb-org-hide-top-level-drawers t
+(defcustom org-hide-drawers-top-level-drawers t
   "If nil, don't hide top-level property drawers."
   :type 'boolean)
 
@@ -87,8 +87,8 @@ Considers `org-hide-drawers-blacklist'."
          ;; the buffer
          (top-level-p (= 1 (org-element-property :begin drawer))))
     (and
-     ;; First adhere to the value of `krisb-org-hide-top-level-drawers'
-     (or krisb-org-hide-top-level-drawers (not top-level-p))
+     ;; First adhere to the value of `org-hide-drawers-top-level-drawers'
+     (or org-hide-drawers-top-level-drawers (not top-level-p))
      ;; Check against properties in the blacklist
      (not (cl-some (lambda (blacklist-prop)
                      (member blacklist-prop property-keys))
