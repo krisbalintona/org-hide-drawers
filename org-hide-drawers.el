@@ -49,19 +49,6 @@ hidden."
   :type 'boolean)
 
 ;;; Variables
-;; TODO 2025-03-22: There might be future bugs related to creating indirect
-;; buffers of buffers with existent overlays.  The reason is that the overlays
-;; stored in this variable for those indirect buffers will contain overlay
-;; objects of the original object, not the indirect buffer's overlays.  However,
-;; with the current implementation of commands, this only applies before
-;; `org-hide-drawers-delete-overlays' then `org-hide-drawers-create-overlays' is
-;; created.  After deletion and creation, the overlay list is associated with
-;; the indirect buffer's objects -- but there might be bugs because these two
-;; commands are needed to replace this variable's value appropriately.  Can this
-;; be avoided?
-(defvar-local org-hide-drawers-overlays nil
-  "A list of overlays used to hide Org drawers in the current buffer.")
-
 (defvar org-hide-drawers--category 'org-hide-drawers
   "Category of org-hide-drawers overlays.")
 
@@ -97,6 +84,18 @@ Considers `org-hide-drawers-blacklist'."
                      (member blacklist-prop property-keys))
                    org-hide-drawers-blacklist)))))
 
+(defun org-hide-drawers-get-overlays (&optional buffer)
+  "Return a list of all org-hide-drawers overlays.
+If BUFFER is non-nil, return a list of org-hide-drawers overlays in that
+buffer instead."
+  (with-current-buffer (or buffer (current-buffer))
+    (let ((all-overlays (overlays-in (point-min) (point-max)))
+          our-overlays)
+      (dolist (ov all-overlays)
+        (when (eq (overlay-get ov 'category) org-hide-drawers--category)
+          (push ov our-overlays)))
+      our-overlays)))
+
 ;;; Commands
 ;; TODO 2024-10-23: Consider special behavior for top-level drawers.  See
 ;; `org-tidy-should-tidy'.
@@ -122,30 +121,25 @@ Considers `org-hide-drawers-blacklist'."
             (overlay-put ov 'category 'org-hide-drawers)
             (overlay-put ov 'display org-hide-drawers-string)
             (overlay-put ov 'modification-hooks
-                         '((lambda (overlay after _beg _end)
-                             (setq org-hide-drawers-overlays
-                                   (remove overlay org-hide-drawers-overlays))
+                         '((lambda (overlay _after _beg _end)
                              (delete-overlay overlay))))
             (overlay-put ov 'read-only t)
             (overlay-put ov 'evaporate t)
-            (push ov org-hide-drawers-overlays)))))))
+            ;; Read (info "(elisp) Invisible Text") for interactions with
+            ;; isearch
+            ;; (overlay-put ov 'isearch-open-invisible t)
+            ))))))
 
 (defun org-hide-drawers-delete-overlays (&optional buffer)
   "Delete all drawer-hiding overlays in the current buffer.
 If BUFFER is non-nil, delete overlays in that buffer instead."
   (interactive)
-  ;; We use `delete-all-overlays' instead of `delete-overlay' on every overlay
-  ;; stored in `org-hide-drawers-overlays' because the overlay objects in this
-  ;; variable do not change when making an indirect buffer; `delete-overlay'
-  ;; will delete overlays in the original buffer but `delete-all-overlays' will
-  ;; not.
-  (delete-all-overlays (or buffer (current-buffer)))
-  (setq org-hide-drawers-overlays nil))
+  (mapc #'delete-overlay (org-hide-drawers-get-overlays buffer)))
 
 (defun org-hide-drawers-toggle ()
   "Toggle visibility of Org drawers in the current buffer."
   (interactive)
-  (if org-hide-drawers-overlays
+  (if (org-hide-drawers-get-overlays)
       (org-hide-drawers-delete-overlays)
     (org-hide-drawers-create-overlays)))
 
