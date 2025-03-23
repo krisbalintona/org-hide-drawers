@@ -185,6 +185,7 @@ buffer instead."
                    (overlay-put overlay 'display (when hidep org-hide-drawers-display-string))))))
 
 ;;; Commands
+;;;###autoload
 (defun org-hide-drawers-make-overlays ()
   "Conditionally hide org drawers in the current buffer using the org AST.
 Hide every drawer in the current buffer if it satisfies
@@ -201,12 +202,14 @@ Hide every drawer in the current buffer if it satisfies
                         (point))))
             (org-hide-drawers-hide-region begin end)))))))
 
+;;;###autoload
 (defun org-hide-drawers-delete-overlays (&optional buffer)
   "Delete all drawer-hiding overlays in the current buffer.
 If BUFFER is non-nil, delete overlays in that buffer instead."
   (interactive)
   (mapc #'delete-overlay (org-hide-drawers-get-overlays buffer)))
 
+;;;###autoload
 (defun org-hide-drawers-toggle ()
   "Toggle visibility of Org drawers in the current buffer."
   (interactive)
