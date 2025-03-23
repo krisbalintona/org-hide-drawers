@@ -62,6 +62,9 @@ hidden."
 (defvar-local org-hide-drawers-overlays nil
   "A list of overlays used to hide Org drawers in the current buffer.")
 
+(defvar org-hide-drawers--category 'org-hide-drawers
+  "Category of org-hide-drawers overlays.")
+
 ;;; Functions
 (defun org-hide-drawers--get-properties (drawer)
   "Extract all properties from the given Org DRAWER element."
@@ -115,6 +118,7 @@ Considers `org-hide-drawers-blacklist'."
                                    nil))) ; Exclude text inserted at the end of overlay
             ;; Read (info "(elisp) Overlay Properties") for an explanation of
             ;; overlay properties
+            (overlay-put ov 'category 'org-hide-drawers)
             (overlay-put ov 'display org-hide-drawers-string)
             (overlay-put ov 'modification-hooks
                          '((lambda (overlay after beg end)
