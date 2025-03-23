@@ -96,11 +96,36 @@ buffer instead."
           (push ov our-overlays)))
       our-overlays)))
 
+(defun org-hide-drawer-hide-region (begin end)
+  "Create an overlay to hide region from BEGIN to END."
+  (let ((ov (make-overlay (1- begin)  ; Include preceding newline in overlay
+                          end         ; Exclude proceeding whitespace in overlay
+                          nil         ; Current buffer
+                          t      ; Exclude text inserted at the start of overlay
+                          nil))) ; Exclude text inserted at the end of overlay
+    ;; Read (info "(elisp) Overlay Properties") for an explanation of overlay
+    ;; properties
+    (overlay-put ov 'category 'org-hide-drawers)
+    (overlay-put ov 'display org-hide-drawers-string)
+    (overlay-put ov 'modification-hooks '((lambda (overlay _after _beg _end)
+                                            (delete-overlay overlay))))
+    (overlay-put ov 'read-only t)
+    (overlay-put ov 'evaporate t)
+    ;; Read (info "(elisp) Invisible Text") for interactions with isearch
+    (overlay-put ov 'invisible t)
+    (overlay-put ov 'isearch-open-invisible (lambda (overlay) (delete-overlay overlay)))
+    (overlay-put ov 'isearch-open-invisible-temporary
+                 (lambda (overlay hidep)
+                   (overlay-put overlay 'invisible hidep)
+                   (overlay-put overlay 'display (when hidep org-hide-drawers-string))))))
+
 ;;; Commands
 ;; TODO 2024-10-23: Consider special behavior for top-level drawers.  See
 ;; `org-tidy-should-tidy'.
 (defun org-hide-drawers-create-overlays ()
-  "Create overlays to hide Org drawers in the current buffer using the Org AST."
+  "Conditionally hide org drawers in the current buffer using the org AST.
+Hide every drawer in the current buffer if it satisfies
+`org-hide-drawers--should-hide'."
   (interactive)
   (let ((ast (org-element-parse-buffer 'element nil)))
     (org-element-map ast '(drawer property-drawer)
@@ -110,25 +135,8 @@ buffer instead."
                  (end (save-excursion
                         (goto-char (org-element-property :end drawer))
                         (skip-chars-backward "\n\t ") ; Skip trailing whitespace
-                        (point)))
-                 (ov (make-overlay (1- begin) ; Include preceding newline in overlay
-                                   end ; Exclude proceeding whitespace in overlay
-                                   nil ; Current buffer
-                                   t ; Exclude text inserted at the start of overlay
-                                   nil))) ; Exclude text inserted at the end of overlay
-            ;; Read (info "(elisp) Overlay Properties") for an explanation of
-            ;; overlay properties
-            (overlay-put ov 'category 'org-hide-drawers)
-            (overlay-put ov 'display org-hide-drawers-string)
-            (overlay-put ov 'modification-hooks
-                         '((lambda (overlay _after _beg _end)
-                             (delete-overlay overlay))))
-            (overlay-put ov 'read-only t)
-            (overlay-put ov 'evaporate t)
-            ;; Read (info "(elisp) Invisible Text") for interactions with
-            ;; isearch
-            ;; (overlay-put ov 'isearch-open-invisible t)
-            ))))))
+                        (point))))
+            (org-hide-drawer-hide-region begin end)))))))
 
 (defun org-hide-drawers-delete-overlays (&optional buffer)
   "Delete all drawer-hiding overlays in the current buffer.
