@@ -68,7 +68,7 @@ top-level property drawers."
 (defcustom org-hide-drawers-drawer-name-blacklist (list)
   "Regexps that prevent hiding drawers when matching the drawer's name.
 A list of regexps that match drawer names, where matches prevent hiding
-drawer, top-level (i.e., before any heading in the buffer) or not. If
+drawer, top-level (i.e., before any heading in the buffer) or not.  If
 the name of a drawer matches any of the regexps in this list, that
 drawer will not be hidden.
 
@@ -160,7 +160,7 @@ buffer instead."
           (push ov our-overlays)))
       our-overlays)))
 
-(defun org-hide-drawer-hide-region (begin end)
+(defun org-hide-drawers-hide-region (begin end)
   "Create an overlay to hide region from BEGIN to END."
   (let ((ov (make-overlay (1- begin)  ; Include preceding newline in overlay
                           end         ; Exclude proceeding whitespace in overlay
@@ -198,7 +198,7 @@ Hide every drawer in the current buffer if it satisfies
                         (goto-char (org-element-property :end drawer))
                         (skip-chars-backward "\n\t ") ; Skip trailing whitespace
                         (point))))
-            (org-hide-drawer-hide-region begin end)))))))
+            (org-hide-drawers-hide-region begin end)))))))
 
 (defun org-hide-drawers-delete-overlays (&optional buffer)
   "Delete all drawer-hiding overlays in the current buffer.
