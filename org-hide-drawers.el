@@ -1,9 +1,12 @@
 ;;; org-hide-drawers.el --- Hide drawers in Org using overlays  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024  Kristoffer Balintona
+;; Copyright (C) 2025  Kristoffer Balintona
 
 ;; Author: Kristoffer Balintona <krisbalintona@gmail.com>
+;; URL: https://github.com/krisbalintona/org-hide-drawers.git
 ;; Keywords: tools, extensions
+;; Version: 1.0.0
+;; Package-Requires: ((emacs "29.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,7 +23,7 @@
 
 ;;; Commentary:
 
-;; Hide drawers in Org using overlays.  My improved version of org-tidy.
+;; Hide drawers in org-mode buffers using overlays.
 
 ;;; Code:
 (require 'org)
