@@ -113,12 +113,6 @@ Considers `org-hide-drawers-blacklist'."
                                    nil ; Current buffer
                                    t ; Don't include text inserted at the start of overlay
                                    nil))) ; Don't include text inserted at the end of overlay
-
-            ;; TODO 2024-10-23: Consider using the `insert-in-front-hooks'
-            ;; special text property to notify the user of danger when adding
-            ;; characters in front of hidden property drawer, since un-hiding it
-            ;; then means that drawer is no longer recognized as such.
-
             (overlay-put ov 'display org-hide-drawers-string)
             (overlay-put ov 'modification-hooks
                          '((lambda (overlay after beg end)
