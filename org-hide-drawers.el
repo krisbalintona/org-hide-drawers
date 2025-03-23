@@ -126,6 +126,7 @@ Considers `org-hide-drawers-blacklist'."
                                    (remove overlay org-hide-drawers-overlays))
                              (delete-overlay overlay))))
             (overlay-put ov 'read-only t)
+            (overlay-put ov 'evaporate t)
             (push ov org-hide-drawers-overlays)))))))
 
 (defun org-hide-drawers-delete-overlays (&optional buffer)
