@@ -121,7 +121,7 @@ Considers `org-hide-drawers-blacklist'."
             (overlay-put ov 'category 'org-hide-drawers)
             (overlay-put ov 'display org-hide-drawers-string)
             (overlay-put ov 'modification-hooks
-                         '((lambda (overlay after beg end)
+                         '((lambda (overlay after _beg _end)
                              (setq org-hide-drawers-overlays
                                    (remove overlay org-hide-drawers-overlays))
                              (delete-overlay overlay))))
