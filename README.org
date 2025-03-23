@@ -18,4 +18,6 @@ This project aims to relieve the visual clutter of some org-mode files by visual
 :END:
 
 + [[https://github.com/jxq0/org-tidy][jxq0/org-tidy]]
-  Org-tidy aims to fulfill the same purpose as this project: hiding overlays in org-mode. However, the implementation is very different. This project's implementation fixes many of [[https://github.com/jxq0/org-tidy/issues][the bugs]] in that package, and affords more flexibility with future features. Importantly, that package's bugs, as far as I can tell, are closely tied to the implementation of org-tidy. To resolve those bugs, in my opinion, would be to rewrite the package to a state very similar to mine.
+  Org-tidy aims to fulfill the same purpose as this project: hiding overlays in org-mode. However, the implementation is very different. This project's implementation fixes many of [[https://github.com/jxq0/org-tidy/issues][the bugs]] in that package. Importantly, that package's bugs, as far as I can tell, are closely tied to the implementation of org-tidy. To resolve those bugs, in my opinion, would be to rewrite the package to a state very similar to mine.
+
+  Additionally, this project's code base has much fewer lines of code and has logic much easier to extend, thus affording more flexibility with potential future features.
