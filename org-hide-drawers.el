@@ -54,11 +54,11 @@ hidden."
 ;; stored in this variable for those indirect buffers will contain overlay
 ;; objects of the original object, not the indirect buffer's overlays.  However,
 ;; with the current implementation of commands, this only applies before
-;; `org-hide-drawers-delete-overlays' then
-;; `org-hide-drawers-create-overlays' is created.  After deletion and
-;; creation, the overlay list is associated with the indirect buffer's objects
-;; -- but there might be bugs because these two commands are needed to replace
-;; this variable's value appropriately.  Can this be avoided?
+;; `org-hide-drawers-delete-overlays' then `org-hide-drawers-create-overlays' is
+;; created.  After deletion and creation, the overlay list is associated with
+;; the indirect buffer's objects -- but there might be bugs because these two
+;; commands are needed to replace this variable's value appropriately.  Can this
+;; be avoided?
 (defvar-local org-hide-drawers-overlays nil
   "A list of overlays used to hide Org drawers in the current buffer.")
 
@@ -109,10 +109,12 @@ Considers `org-hide-drawers-blacklist'."
                         (skip-chars-backward "\n\t ") ; Skip trailing whitespace
                         (point)))
                  (ov (make-overlay (1- begin) ; Include preceding newline in overlay
-                                   end ; Don't include proceeding whitespace in overlay
+                                   end ; Exclude proceeding whitespace in overlay
                                    nil ; Current buffer
-                                   t ; Don't include text inserted at the start of overlay
-                                   nil))) ; Don't include text inserted at the end of overlay
+                                   t ; Exclude text inserted at the start of overlay
+                                   nil))) ; Exclude text inserted at the end of overlay
+            ;; Read (info "(elisp) Overlay Properties") for an explanation of
+            ;; overlay properties
             (overlay-put ov 'display org-hide-drawers-string)
             (overlay-put ov 'modification-hooks
                          '((lambda (overlay after beg end)
@@ -128,10 +130,10 @@ Considers `org-hide-drawers-blacklist'."
 If BUFFER is non-nil, delete overlays in that buffer instead."
   (interactive)
   ;; We use `delete-all-overlays' instead of `delete-overlay' on every overlay
-  ;; stored in `org-hide-drawers-overlays' because the overlay objects in
-  ;; this variable do not change when making an indirect buffer;
-  ;; `delete-overlay' will delete overlays in the original buffer but
-  ;; `delete-all-overlays' will not.
+  ;; stored in `org-hide-drawers-overlays' because the overlay objects in this
+  ;; variable do not change when making an indirect buffer; `delete-overlay'
+  ;; will delete overlays in the original buffer but `delete-all-overlays' will
+  ;; not.
   (delete-all-overlays (or buffer (current-buffer)))
   (setq org-hide-drawers-overlays nil))
 
