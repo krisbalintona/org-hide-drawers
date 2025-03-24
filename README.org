@@ -29,12 +29,12 @@ This package is currently not available in any package archives. You should down
 Alternatively, if you an Emacs version of at least 29.1, you can use ~package-vc-install~:
 #+begin_src emacs-lisp
   (unless (package-installed-p 'org-hide-drawers)
-    (package-vc-install '(org-hide-drawers :url "git@github.com:krisbalintona/org-hide-drawers.git"
+    (package-vc-install '(org-hide-drawers :url "https://github.com/krisbalintona/org-hide-drawers.git"
                                            :rev :newest)))
 
   ;; Or with use-package:
   (use-package org-hide-drawers
-    :vc ( :url "git@github.com:krisbalintona/org-hide-drawers.git"
+    :vc ( :url "https://github.com/krisbalintona/org-hide-drawers.git"
           :rev :newest))
 #+end_src
 
