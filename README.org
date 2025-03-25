@@ -56,6 +56,7 @@ To see all commands available, do =C-h a org-hide-drawers- RET=, or =M-x apropos
 :END:
 
 The most notable user options are:
++ ~org-hide-drawers-display-string~
 + ~org-hide-drawers-property-name-blacklist~
 + ~org-hide-drawers-hide-top-level-properties-drawer~
 + ~org-hide-drawers-drawer-name-blacklist~
