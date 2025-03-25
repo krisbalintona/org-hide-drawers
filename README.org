@@ -3,7 +3,7 @@
 
 #  LocalWords:  toc
 
-This project aims to relieve the visual clutter of some org-mode files by visually shortening them to a certain string via overlays.
+Org-hide-drawers "hides" org-mode drawers. "Hiding," in this case, means using overlays with the display property set to visually shorten them. This includes both property drawers and drawers in general (which are different org elements). The goal of this project is to reduce the visual clutter of org-mode buffers with many drawers.
 
 [[file:screenshots/screenshot_1.png]]
 
@@ -44,9 +44,9 @@ Alternatively, if you an Emacs version of at least 29.1, you can use ~package-vc
 :END:
 
 1. Open an org buffer.
-2. Enable ~org-hide-drawers-mode~. Drawers are hidden.
+2. Enable ~org-hide-drawers-mode~. Drawers become "hidden": their displayed text is changed to ~org-hide-drawers-display-string~.
 3. Un-hide drawers by calling ~org-hide-drawers-toggle~.
-4. Hide drawers by calling ~org-hide-drawers-toggle~ again.
+4. Hide drawers by calling ~org-hide-drawers-toggle~ again, or ~org-hide-drawers-delete-overlays~.
 
 To see all commands available, do =C-h a org-hide-drawers- RET=, or =M-x apropos-command org-hide-drawers- RET=.
 
