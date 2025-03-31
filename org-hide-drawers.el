@@ -192,6 +192,18 @@ buffer instead."
                    (overlay-put overlay 'invisible hidep)
                    (overlay-put overlay 'display (when hidep org-hide-drawers-display-string))))))
 
+(defun org-hide-drawers-hide-drawer (drawer)
+  "Hide DRAWER.
+DRAWER is an org element drawer (e.g., a property drawer or drawer type
+element)."
+  (when (org-hide-drawers--hide-drawer-p drawer)
+    (let* ((begin (org-element-property :begin drawer))
+           (end (save-excursion
+                  (goto-char (org-element-property :end drawer))
+                  (skip-chars-backward "\n\t ") ; Skip trailing whitespace
+                  (point))))
+      (org-hide-drawers-hide-region begin end))))
+
 ;;; Commands
 ;;;###autoload
 (defun org-hide-drawers-make-overlays ()
@@ -200,15 +212,7 @@ Hide every drawer in the current buffer if it satisfies
 `org-hide-drawers--hide-drawer-p'."
   (interactive)
   (let ((ast (org-element-parse-buffer 'element nil)))
-    (org-element-map ast '(drawer property-drawer)
-      (lambda (drawer)
-        (when (org-hide-drawers--hide-drawer-p drawer)
-          (let* ((begin (org-element-property :begin drawer))
-                 (end (save-excursion
-                        (goto-char (org-element-property :end drawer))
-                        (skip-chars-backward "\n\t ") ; Skip trailing whitespace
-                        (point))))
-            (org-hide-drawers-hide-region begin end)))))))
+    (org-element-map ast '(drawer property-drawer) #'org-hide-drawers-hide-drawer)))
 
 ;;;###autoload
 (defun org-hide-drawers-delete-overlays (&optional buffer)
