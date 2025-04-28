@@ -3,6 +3,9 @@
 
 #  LocalWords:  toc
 
+# MELPA badge
+#+HTML: <a href="https://melpa.org/#/pdf-meta-edit"><img alt="MELPA" src="https://melpa.org/packages/org-hide-drawers-badge.svg"/></a>
+
 Org-hide-drawers "hides" org-mode drawers. "Hiding," in this case, means using overlays with the display property set to visually shorten them. This includes both property drawers and drawers in general (which are different org elements). The goal of this project is to reduce the visual clutter of org-mode buffers with many drawers.
 
 [[file:screenshots/screenshot_1.png]]
