@@ -180,10 +180,9 @@ buffer instead."
     ;; properties
     (overlay-put ov 'category 'org-hide-drawers)
     (overlay-put ov 'display org-hide-drawers-display-string)
-    (overlay-put ov 'modification-hooks
+    (overlay-put ov 'modification-hooks ; Delete overlay on modifying its text
                  (list (lambda (overlay _after _beg _end) (delete-overlay overlay))))
-    (overlay-put ov 'read-only t)
-    (overlay-put ov 'evaporate t)
+    (overlay-put ov 'evaporate t)       ; Delete overlay if it has no text
     ;; Read (info "(elisp) Invisible Text") for interactions with isearch
     (overlay-put ov 'invisible t)
     (overlay-put ov 'isearch-open-invisible (lambda (overlay) (delete-overlay overlay)))
