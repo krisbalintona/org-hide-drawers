@@ -1,0 +1,7 @@
+* Unreleased
+
+** Changed
+
++ Improve names of several user options
+
+** Fixed
