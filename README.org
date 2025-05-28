@@ -13,7 +13,6 @@ Org-hide-drawers "hides" org-mode drawers. "Hiding," in this case, means using o
 * Table of contents
 :PROPERTIES:
 :TOC:      :include all :force (nothing) :ignore (this) :local (nothing)
-:ID:       57d7d5f7-d57d-4414-af15-25b269891e04
 :END:
 
 :CONTENTS:
@@ -26,7 +25,6 @@ Org-hide-drawers "hides" org-mode drawers. "Hiding," in this case, means using o
 * Installation
 :PROPERTIES:
 :CUSTOM_ID: installation
-:ID:       4310aa41-9697-4eab-8615-14c5600a5dab
 :END:
 
 This package is currently not available in any package archives. You should download this repository locally then add it to your load path.
@@ -46,7 +44,6 @@ Alternatively, if you an Emacs version of at least 29.1, you can use ~package-vc
 * Usage
 :PROPERTIES:
 :CUSTOM_ID: usage
-:ID:       6fd2ef2e-2f92-4f41-915d-14485ec1700f
 :END:
 
 1. Open an org buffer.
@@ -59,7 +56,6 @@ To see all commands available, do =C-h a org-hide-drawers- RET=, or =M-x apropos
 ** User options
 :PROPERTIES:
 :CUSTOM_ID: user-options
-:ID:       651a39f6-a966-4486-ac06-cc69001560f7
 :END:
 
 The most notable user options are:
@@ -73,7 +69,6 @@ To see all user options available, do =C-h u org-hide-drawers- RET=, or =M-x apr
 * Related packages
 :PROPERTIES:
 :CUSTOM_ID: related-packages
-:ID:       5e124722-8380-48d1-8fc5-52082efec1aa
 :END:
 
 + [[https://github.com/jxq0/org-tidy][jxq0/org-tidy]]
