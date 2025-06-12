@@ -27,19 +27,7 @@ Org-hide-drawers "hides" org-mode drawers. "Hiding," in this case, means using o
 :CUSTOM_ID: installation
 :END:
 
-This package is currently not available in any package archives. You should download this repository locally then add it to your load path.
-
-Alternatively, if you an Emacs version of at least 29.1, you can use ~package-vc-install~:
-#+begin_src emacs-lisp
-  (unless (package-installed-p 'org-hide-drawers)
-    (package-vc-install '(org-hide-drawers :url "https://github.com/krisbalintona/org-hide-drawers.git"
-                                           :rev :newest)))
-
-  ;; Or with use-package:
-  (use-package org-hide-drawers
-    :vc ( :url "https://github.com/krisbalintona/org-hide-drawers.git"
-          :rev :newest))
-#+end_src
+This package is officially packaged in the MELPA package repository. Please see [[https://melpa.org/#/getting-started][this guide by MELPA]] for instructions on how to make packages from MELPA available and install them.
 
 * Usage
 :PROPERTIES:
