@@ -8,6 +8,7 @@
 
 Org-hide-drawers "hides" org-mode drawers. "Hiding," in this case, means using overlays with the display property set to visually shorten them. This includes both property drawers and drawers in general (which are different org elements). The goal of this project is to reduce the visual clutter of org-mode buffers with many drawers.
 
+You can see in the screenshot below that several drawers are displayed as a hash sign (“#”) at the end of the line above where you’d normally see it:
 [[file:screenshots/screenshot_1.png]]
 
 * Table of contents
