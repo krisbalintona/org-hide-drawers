@@ -109,8 +109,6 @@ nil."
   :type 'boolean)
 
 ;;; Variables
-(defvar org-hide-drawers--category 'org-hide-drawers
-  "Category of org-hide-drawers overlays.")
 
 ;;; Functions
 (defun org-hide-drawers--get-properties (property-drawer)
@@ -168,7 +166,7 @@ buffer instead."
     (let ((all-overlays (overlays-in (point-min) (point-max)))
           our-overlays)
       (dolist (ov all-overlays)
-        (when (eq (overlay-get ov 'category) org-hide-drawers--category)
+        (when (eq (overlay-get ov 'category) 'org-hide-drawers)
           (push ov our-overlays)))
       our-overlays)))
 
