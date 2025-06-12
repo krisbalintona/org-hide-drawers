@@ -61,6 +61,6 @@ To see all user options available, do =C-h u org-hide-drawers- RET=, or =M-x apr
 :END:
 
 + [[https://github.com/jxq0/org-tidy][jxq0/org-tidy]]
-  Org-tidy aims to fulfill the same purpose as this project: hiding overlays in org-mode. However, the implementation is very different. This project's implementation fixes many of [[https://github.com/jxq0/org-tidy/issues][the bugs]] in that package. Importantly, that package's bugs, as far as I can tell, are closely tied to the implementation of org-tidy. To resolve those bugs, in my opinion, would be to rewrite the package to a state very similar to mine.
+  Org-tidy aims to fulfill the same purpose as this project: hiding org-mode drawers with overlays. However, our implementations differ. This project's implementation fixes many of [[https://github.com/jxq0/org-tidy/issues][the existing bugs]] in that package. Org-tidy’s bugs are closely tied to its implementation, so org-hide-drawers resolves them by implementing similar functionality differently.
 
-  Additionally, this project's code base has much fewer lines of code and has logic much easier to extend, thus affording more flexibility with potential future features.
+  Additionally, this project's code base has fewer lines of code and its logic is much easier to extend, thus affording more flexibility with potential future features.
