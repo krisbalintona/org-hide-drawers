@@ -21,6 +21,7 @@ You can see in the screenshot below that several drawers are displayed as a hash
 - [[#usage][Usage]]
   - [[#user-options][User options]]
 - [[#related-packages][Related packages]]
+- [[#potential-features-and-contributing][Potential features and contributing]]
 :END:
 
 * Installation
@@ -64,3 +65,10 @@ To see all user options available, do =C-h u org-hide-drawers- RET=, or =M-x apr
   Org-tidy aims to fulfill the same purpose as this project: hiding org-mode drawers with overlays. However, our implementations differ. This project's implementation fixes many of [[https://github.com/jxq0/org-tidy/issues][the existing bugs]] in that package. Org-tidy’s bugs are closely tied to its implementation, so org-hide-drawers resolves them by implementing similar functionality differently.
 
   Additionally, this project's code base has fewer lines of code and its logic is much easier to extend, thus affording more flexibility with potential future features.
+
+* Potential features and contributing
+:PROPERTIES:
+:CUSTOM_ID: potential-features-and-contributing
+:END:
+
+If there is a feature or functionality you would like to see in org-hide-drawers, I welcome you to simply open an issue. As mentioned above, org-hide-drawers is designed to be simple, easy to work with, and easy to extend. And as always, pull requests are welcome.
