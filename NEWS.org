@@ -1,7 +1,23 @@
+#+TITLE: NEWS
+
 * Unreleased
+
+* 2.0.0 - 2025-09-23
+
+** Breaking changes
+
++ All previously defined user options (~org-hide-drawers-display-string~, ~org-hide-drawers-keep-visible-properties~, ~org-hide-drawers-hide-top-level-properties-drawer~, and  ~org-hide-drawers-keep-visible-drawers~) were consolidated into a single new user option: ~org-hide-drawers-display-strings~.
+
+  Users should migrate their previous settings into this user option. The docstring of this user option provides a comprehensive description of the possible ways to customize it. Additionally, there are several example values provided in the README.
+  
+** Changes
+
++ New user option: ~org-hide-drawers-display-strings~. This option allows for greater flexibility in specifying which drawers are hidden and which aren’t as well as what display strings to use for any hidden drawer.
++ The previous default behavior of hiding the top-level property drawer remains. However, the display string for that drawer has changed to “[Hidden...]”, propertized with the =shadow= face.
++ The previous default behavior of hiding the regular drawers remains. However, the display string for these drawers has been changed to “[Hidden...]”, propertized with the =shadow= face.
+
+* 1.0.2 - 2025-03-25
 
 ** Changed
 
 + Improve names of several user options
-
-** Fixed
