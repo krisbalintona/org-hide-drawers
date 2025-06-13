@@ -190,8 +190,9 @@ may be set to achieve various behaviors:
         property were present.)
 
     (list (list \\='property-drawer-regexp \"\" (rx (0+ anychar)))
-        Hide all property drawers, displaying an empty string instead.
-        Effectively, these property drawers are made invisible."
+        Hide all property drawers, including the top-level property
+        drawer, displaying an empty string instead.  Effectively, these
+        property drawers are made invisible."
   :type '(repeat (repeat sexp))
   :set 'org-hide-drawers--set-display-strings-func)
 
