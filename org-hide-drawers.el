@@ -71,6 +71,10 @@ value of `org-hide-drawers-display-strings’ is customized or set with
   :group 'org-mode
   :prefix "org-hide-drawers-")
 
+;; TODO 2025-06-13: Consider having DISPLAY-STRING be a function such
+;; that the string can be dynamically computed.  For instance, we
+;; could have the display string e.g. be the value of a particular
+;; property instead of the same string all the time.
 ;; REVIEW 2025-06-13: Perhaps rename ‘property-drawer-regexp to
 ;; ‘property-drawer-key and ‘drawer-regexp to ‘drawer-name.
 ;; TODO 2025-06-13: Is ‘property-drawer-regexp really sufficient for
