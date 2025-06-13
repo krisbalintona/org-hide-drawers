@@ -71,9 +71,8 @@ value of `org-hide-drawers-display-strings’ is customized or set with
   :group 'org-mode
   :prefix "org-hide-drawers-")
 
-;; REVIEW 2025-06-13: Perhaps ‘property-drawer-regexp should be
-;; renamed to something like ‘property-drawer-property-regexp to
-;; suggest its actual function better.
+;; REVIEW 2025-06-13: Perhaps rename ‘property-drawer-regexp to
+;; ‘property-drawer-key and ‘drawer-regexp to ‘drawer-name.
 ;; TODO 2025-06-13: Is ‘property-drawer-regexp really sufficient for
 ;; all possible property drawers?  It seems strange that if one wanted
 ;; to match against all property drawers they would need to match
@@ -191,8 +190,9 @@ may be set to achieve various behaviors:
         property were present.)
 
     (list (list \\='property-drawer-regexp \"\" (rx (0+ anychar)))
-        Hide all property drawers, displaying an empty string instead.
-        Effectively, these property drawers are made invisible."
+        Hide all property drawers, including the top-level property
+        drawer, displaying an empty string instead.  Effectively, these
+        property drawers are made invisible."
   :type '(repeat (repeat sexp))
   :set 'org-hide-drawers--set-display-strings-func)
 
