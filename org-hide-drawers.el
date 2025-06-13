@@ -276,9 +276,13 @@ If BUFFER is non-nil, delete overlays in that buffer instead."
 ;; specification, because it checks property key names, will never
 ;; match a property drawer that is empty (has no property keys).
 (defcustom org-hide-drawers-display-strings
-  (list (list 'top-level-property-drawer (propertize "[Hidden...]" 'face 'shadow))
-        (list 'drawer-regexp (propertize "[Hidden...]" 'face 'shadow) (rx (0+ anychar)))
-        (list 'property-drawer-regexp (propertize " #" 'face 'shadow) (rx (0+ anychar))))
+  (list (list 'top-level-property-drawer
+              (propertize (concat "[Hidden" (truncate-string-ellipsis) "]") 'face 'shadow))
+        (list 'drawer-regexp
+              (propertize (concat "[Hidden" (truncate-string-ellipsis) "]") 'face 'shadow) (rx (0+ anychar)))
+        (list 'property-drawer-regexp
+              (propertize " #" 'face 'shadow)
+              (rx (0+ anychar))))
   "Display strings used to hide drawers.
 This is a list of lists.  Each inner list is a specification that for
 the kind of drawer or property drawer that should be matched against, a
