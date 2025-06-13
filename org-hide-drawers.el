@@ -257,7 +257,7 @@ user option."
                            (car body)))
                     ;; Match against a user-provided predicate
                     ((eq condition-type 'pred)
-                     (list `(funcall ,(car body) drawer) (cadr body)))
+                     (list `(save-excursion (funcall ,(car body) drawer)) (cadr body)))
                     ;; Match against every drawer and property drawer
                     ((eq condition-type 'all)
                      (list t (car body)))
