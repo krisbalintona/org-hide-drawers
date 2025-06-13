@@ -77,9 +77,9 @@ value of `org-hide-drawers-display-strings’ is customized or set with
 ;; TODO 2025-06-13: Is ‘property-drawer-regexp really sufficient for
 ;; all possible property drawers?  It seems strange that if one wanted
 ;; to match against all property drawers they would need to match
-;; against any property drawer property key name.  Also, it might just
-;; never match against property drawers that are empty, i.e., that
-;; have no property keys in them --- I haven’t tested this though.
+;; against any property drawer property key name.  Additionally, this
+;; specification, because it checks property key names, will never
+;; match a property drawer that is empty (has no property keys).
 (defcustom org-hide-drawers-display-strings
   (list (list 'top-level-property-drawer (propertize "[Hidden...]" 'face 'shadow))
         (list 'drawer-regexp (propertize "[Hidden...]" 'face 'shadow) (rx (0+ anychar)))
@@ -177,7 +177,7 @@ may be set to achieve various behaviors:
           (list 'drawer-regexp (propertize \"[Hidden...]\" 'face 'shadow) (rx (0+ anychar)))
           (list 'all (propertize \" #\" 'face 'shadow)))
         Hide the top-level property drawer unless it has the \“ID\”
-        property set, in which case keep it shown. Also don’t hide any
+        property set, in which case keep it shown.  Also don’t hide any
         other property drawer that sets the \“ID\” property.  Hide all
         regular drawers with a propertized \“[Hidden...]\”.  Then hide
         everything else with a propertized \“ #\”.
