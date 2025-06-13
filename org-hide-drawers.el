@@ -26,7 +26,7 @@
 ;; Hide drawers in org-mode buffers using overlays.  These overlays
 ;; replace the visual display of drawers using their "display"
 ;; property.
-;; 
+;;
 ;; Test out the functionality easily:
 ;; 1. Open an org buffer.  (Indirect buffers are supported by
 ;;    org-hide-drawers.)
@@ -126,9 +126,9 @@ Each specification may have one of the following forms:
     (\\=‘pred FUNCTION-SYMBOL DISPLAY-STRING)
     (\\=‘pred FUNCTION-OBJECT DISPLAY-STRING)
         Specify a function (either by name or as a lambda) that accepts
-        a single argument.  Evaluate this function by passing an
-        org-element drawer or property drawer to it.  Match against
-        drawers or property drawers where this function returns non-nil.
+        a single argument: an org-element drawer or property drawer.
+        Match against drawers or property drawers where this function
+        returns non-nil.
 
     (\\=‘all)
         Match against every drawer or property drawer.  This is useful
@@ -188,7 +188,11 @@ may be set to achieve various behaviors:
         top-level property drawer would succeed in matching against the
         first specification, so it would not reach the second
         specification which would’ve kept it shown if the \“ID\”
-        property were present.)"
+        property were present.)
+
+    (list (list \\='property-drawer-regexp \"\" (rx (0+ anychar)))
+        Hide all property drawers, displaying an empty string instead.
+        Effectively, these property drawers are made invisible."
   :type '(repeat (repeat sexp))
   :set 'org-hide-drawers--set-display-strings-func)
 
