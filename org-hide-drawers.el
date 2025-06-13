@@ -163,7 +163,7 @@ may be set to achieve various behaviors:
             :ID: 20230824T194824.718246
             :END:
 
-    (list (list \\='drawer-regexp (propertize \" #\" 'face 'shadow) \“^CONTENTS$\“))
+    (list (list \\='drawer-regexp (propertize \" #\" \\='face \\='shadow) \“^CONTENTS$\“))
         Hide drawers whose name matched \“CONTENTS\” exactly.  Display
         the string \" #\" with the shadow face applied instead.  The
         following drawer would be hidden:
@@ -176,9 +176,9 @@ may be set to achieve various behaviors:
             :END:
 
     (list (list \\='property-drawer-regexp nil \"ID\")
-          (list \\=’top-level-property drawer (propertize \"[Hidden...]\" 'face 'shadow))
-          (list 'drawer-regexp (propertize \"[Hidden...]\" 'face 'shadow) (rx (0+ anychar)))
-          (list 'all (propertize \" #\" 'face 'shadow)))
+          (list \\=’top-level-property drawer (propertize \"[Hidden...]\" \\='face \\='shadow))
+          (list \\='drawer-regexp (propertize \"[Hidden...]\" \\='face \\='shadow) (rx (0+ anychar)))
+          (list '\\=all (propertize \" #\" \\='face \\='shadow)))
         Hide the top-level property drawer unless it has the \“ID\”
         property set, in which case keep it shown.  Also don’t hide any
         other property drawer that sets the \“ID\” property.  Hide all
