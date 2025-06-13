@@ -78,7 +78,7 @@ value of `org-hide-drawers-display-strings’ is customized or set with
               properties)))
     (nreverse properties)))             ; Return the list in original order
 
-(defun org-hide-drawers--set-display-strings-func (_option value)
+(defun org-hide-drawers--set-display-strings-func (var val)
   "Set the value of `org-hide-drawers--display-strings-func’ based on VALUE.
 This function is meant as the value of the :set property of
 `org-hide-drawers-display-strings’.  It transforms the value of that
@@ -87,8 +87,9 @@ option into a cond form stored in
 `org-hide-drawers--display-strings-func’ for a description of this cond
 form and its purpose.
 
-_OPTION is the symbol of a user option and VALUE is the value of that
+VAR is the symbol of a user option and VAL is the val of that
 user option."
+  (set-default-toplevel-value var val)
   (setq org-hide-drawers--display-strings-func
         ;; Construct a lambda with a `cond’ whose conditions match
         ;; against a certain type of drawer and whose bodies are the
@@ -146,7 +147,7 @@ user option."
                     ;; Error if the supplied org element is not a
                     ;; drawer or property drawer
                     (t (error "[org-hide-drawers--set-display-strings-func] Unknown condition type: %s" condition-type)))))
-               value)))))
+               val)))))
 
 (defun org-hide-drawers--determine-display-string (drawer)
   "Return the string that should be used to hide DRAWER.
@@ -394,7 +395,8 @@ may be set to achieve various behaviors:
         drawer, displaying an empty string instead.  Effectively, these
         property drawers are made invisible."
   :type '(repeat (repeat sexp))
-  :set 'org-hide-drawers--set-display-strings-func)
+  :set 'org-hide-drawers--set-display-strings-func
+  :initialize 'custom-initialize-changed)
 
 ;;; Minor mode
 ;;;###autoload
