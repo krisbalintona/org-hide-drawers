@@ -71,6 +71,15 @@ value of `org-hide-drawers-display-strings’ is customized or set with
   :group 'org-mode
   :prefix "org-hide-drawers-")
 
+;; REVIEW 2025-06-13: Perhaps ‘property-drawer-regexp should be
+;; renamed to something like ‘property-drawer-property-regexp to
+;; suggest its actual function better.
+;; TODO 2025-06-13: Is ‘property-drawer-regexp really sufficient for
+;; all possible property drawers?  It seems strange that if one wanted
+;; to match against all property drawers they would need to match
+;; against any property drawer property key name.  Also, it might just
+;; never match against property drawers that are empty, i.e., that
+;; have no property keys in them --- I haven’t tested this though.
 (defcustom org-hide-drawers-display-strings
   (list (list 'top-level-property-drawer (propertize "[Hidden...]" 'face 'shadow))
         (list 'drawer-regexp (propertize "[Hidden...]" 'face 'shadow) (rx (0+ anychar)))
