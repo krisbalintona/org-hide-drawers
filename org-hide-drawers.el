@@ -46,6 +46,7 @@
 
 ;;; Code:
 (require 'org-element)
+(require 'mule-util)                  ; For `truncate-string-ellipsis’
 
 ;;; Internal variables
 (defvar org-hide-drawers--category 'org-hide-drawers
