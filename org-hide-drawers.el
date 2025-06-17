@@ -402,7 +402,7 @@ may be set to achieve various behaviors:
         property drawers are made invisible."
   :type '(repeat (repeat sexp))
   :set 'org-hide-drawers--set-display-strings-func
-  :initialize 'custom-initialize-changed)
+  :initialize 'custom-initialize-reset)
 
 ;;; Minor mode
 ;;;###autoload
