@@ -102,13 +102,17 @@ user option."
            (cond
             ,@(mapcar
                (lambda (spec)
-                 (let ((condition-type (car spec))
-                       (body (cdr spec)))
+                 (let* ((condition-type (car spec))
+                        (body (cdr spec))
+                        (display-string `(pcase ,(car body)
+                                           ((pred stringp)
+                                            ,(car body))
+                                           ((pred functionp)
+                                            (funcall ,(car body) drawer)))))
                    (cond
                     ;; Match on drawer names based on regexp
                     ((eq condition-type 'drawer-regexp)
-                     (let ((display-string (car body))
-                           (regexp (cadr body))
+                     (let ((regexp (cadr body))
                            (case-fold-search (if (cddr body)
                                                  (caddr body)
                                                case-fold-search)))
@@ -124,8 +128,7 @@ user option."
                     ;; top-level property drawer satisfies a general
                     ;; property drawer specification.
                     ((eq condition-type 'property-drawer-regexp)
-                     (let ((display-string (car body))
-                           (regexp (cadr body))
+                     (let ((regexp (cadr body))
                            (case-fold-search (if (cddr body)
                                                  (caddr body)
                                                case-fold-search)))
@@ -140,13 +143,13 @@ user option."
                     ((eq condition-type 'top-level-property-drawer)
                      (list `(and (eq 'property-drawer (org-element-type drawer))
                                  (= 1 (org-element-property :begin drawer)))
-                           (car body)))
+                           display-string))
                     ;; Match against a user-provided predicate
                     ((eq condition-type 'pred)
                      (list `(save-excursion (funcall ,(car body) drawer)) (cadr body)))
                     ;; Match against every drawer and property drawer
                     ((eq condition-type 'all)
-                     (list t (car body)))
+                     (list t display-string))
                     ;; Error if the supplied org element is not a
                     ;; drawer or property drawer
                     (t (error "[org-hide-drawers--set-display-strings-func] Unknown condition type: %s" condition-type)))))
@@ -267,10 +270,6 @@ If BUFFER is non-nil, delete overlays in that buffer instead."
   :group 'org-mode
   :prefix "org-hide-drawers-")
 
-;; TODO 2025-06-13: Consider having DISPLAY-STRING be a function such
-;; that the string can be dynamically computed.  For instance, we
-;; could have the display string e.g. be the value of a particular
-;; property instead of the same string all the time.
 ;; REVIEW 2025-06-13: Perhaps rename 'property-drawer-regexp to
 ;; 'property-drawer-key and 'drawer-regexp to 'drawer-name.
 ;; TODO 2025-06-13: Is 'property-drawer-regexp really sufficient for
@@ -344,12 +343,13 @@ Each specification may have one of the following forms:
         property drawer not already matched against from other
         specifications.
 
-Any instance of DISPLAY-STRING in the specifications above is the string
-that will be the value of the display property of the overlay created to
-hide drawers matched against.  DISPLAY-STRING may be a propertized
-string if the user wishes to, for example, use strings with faces
-applied.  DISPLAY-STRING may also be nil to indicate that the drawer or
-property drawer matched against should not be hidden.
+In the specifications above, DISPLAY-STRING is either nil or non-nil.
+DISPLAY-STRING will be used as the text of the overlay created to hide
+drawers matched against.  If DISPLAY-STRING is nil, the drawer or
+property drawer matched against should not be hidden (i.e., it will
+remain shown).  If DISPLAY-STRING is non-nil, it is either a string or a
+function that returns a string and accepts a drawer as a single
+argument.
 
 Below are several example emacs-lisp forms that evaluate to possible
 values of this user option.  They illustrate the possible ways this user
