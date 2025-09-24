@@ -68,7 +68,9 @@ value of `org-hide-drawers-display-strings' is customized or set with
 
 ;;; Functions
 (defun org-hide-drawers--get-properties (property-drawer)
-  "Extract all properties from the given org drawer (PROPERTY-DRAWER)."
+  "Extract all properties from the given drawer (org PROPERTY-DRAWER).
+Returns an alist of property names within PROPERTY-DRAWER to the values
+of each property."
   (let ((contents (org-element-contents property-drawer))
         properties)
     (dolist (element contents)
