@@ -2,6 +2,12 @@
 
 * Unreleased
 
+* 2.1.0 - 2025-09-24
+
+** Changes
+
++ The user option ~org-hide-drawers-display-strings~ now accepts functions as values for DISPLAY-STRING. Previously, only strings were accepted.
+
 * 2.0.0 - 2025-09-23
 
 ** Breaking changes
