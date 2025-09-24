@@ -70,6 +70,16 @@ To help users get started, below are several example values of ~org-hide-drawers
   ;; " [Hidden...]" string, with the shadow face applied.
   (setopt org-hide-drawers-display-strings
           '((property-drawer-regexp (propertize " [Hidden...]" 'face 'shadow) "ID")))
+
+  ;; For property drawers with the "CATEGORY" property, visually replace
+  ;; them with formatted text showing the value of that property.
+  (setopt org-hide-drawers-display-strings
+          '((property-drawer-regexp
+             (lambda (property-drawer)
+               (let* ((property-info (org-hide-drawers--get-properties property-drawer))
+                      (category (alist-get "CATEGORY" property-info nil nil #'string-equal)))
+                 (propertize (concat "\n Category: " category "\n") 'face 'shadow)))
+             "^CATEGORY$")))
 #+end_src
 
 * Related packages
