@@ -34,19 +34,19 @@
 ;;    displayed text is changed to `org-hide-drawers-display-string'.
 ;;    The actual text remains unchanged.
 ;; 3. Un-hide drawers by calling `org-hide-drawers-toggle', or
-;;    `org-hide-drawers-make-overlays’.
+;;    `org-hide-drawers-make-overlays'.
 ;; 4. Hide drawers by calling `org-hide-drawers-toggle' again, or
 ;;    `org-hide-drawers-delete-overlays'.
 ;;
 ;; Which drawers and property drawers are hidden and replaced by what
-;; strings may be specified by the `org-hide-drawers-display-strings’
+;; strings may be specified by the `org-hide-drawers-display-strings'
 ;; user option.  Org-hide-drawers supports matching against drawer
 ;; names, property drawer key names, and arbitrary user-defined
 ;; predicates.
 
 ;;; Code:
 (require 'org-element)
-(require 'mule-util)                  ; For `truncate-string-ellipsis’
+(require 'mule-util)                  ; For `truncate-string-ellipsis'
 
 ;;; Internal variables
 (defvar org-hide-drawers--category 'org-hide-drawers
@@ -58,13 +58,13 @@ The value of this variable is function that accepts one argument, an
 org-element whose type is drawer or property drawer.  It returns a
 string that will be the the value of the display property of the overlay
 encompassing the region of that drawer.  These strings are determined by
-the value of `org-hide-drawers-display-strings’.
+the value of `org-hide-drawers-display-strings'.
 
-See the docstring of `org-hide-drawers-display-strings’ for a
+See the docstring of `org-hide-drawers-display-strings' for a
 description of which drawers are replaced by which strings.  This
-variable is set by `org-hide-drawers--set-display-strings-func’ when the
-value of `org-hide-drawers-display-strings’ is customized or set with
-`setopt’.")
+variable is set by `org-hide-drawers--set-display-strings-func' when the
+value of `org-hide-drawers-display-strings' is customized or set with
+`setopt'.")
 
 ;;; Functions
 (defun org-hide-drawers--get-properties (property-drawer)
@@ -80,19 +80,19 @@ value of `org-hide-drawers-display-strings’ is customized or set with
     (nreverse properties)))             ; Return the list in original order
 
 (defun org-hide-drawers--set-display-strings-func (var val)
-  "Set the value of `org-hide-drawers--display-strings-func’ based on VALUE.
+  "Set the value of `org-hide-drawers--display-strings-func' based on VALUE.
 This function is meant as the value of the :set property of
-`org-hide-drawers-display-strings’.  It transforms the value of that
+`org-hide-drawers-display-strings'.  It transforms the value of that
 option into a cond form stored in
-`org-hide-drawers--display-strings-func’.  See the docstring of
-`org-hide-drawers--display-strings-func’ for a description of this cond
+`org-hide-drawers--display-strings-func'.  See the docstring of
+`org-hide-drawers--display-strings-func' for a description of this cond
 form and its purpose.
 
 VAR is the symbol of a user option and VAL is the val of that
 user option."
   (set-default-toplevel-value var val)
   (setq org-hide-drawers--display-strings-func
-        ;; Construct a lambda with a `cond’ whose conditions match
+        ;; Construct a lambda with a `cond' whose conditions match
         ;; against a certain type of drawer and whose bodies are the
         ;; display string that should be displayed instead of the text
         ;; of that drawer
@@ -155,12 +155,12 @@ user option."
 DRAWER is either a drawer or property drawer org element.
 
 The string returned by this function is dependent on the value of
-`org-hide-drawers-display-strings’.  See the docstring of
-`org-hide-drawers-display-strings’ for a description of which display
+`org-hide-drawers-display-strings'.  See the docstring of
+`org-hide-drawers-display-strings' for a description of which display
 strings match against which drawers.
 
 If this function returns nil, DRAWER should not be hidden according to
-the value of `org-hide-drawers-display-strings’.
+the value of `org-hide-drawers-display-strings'.
 
 If DRAWER is not an org drawer or property drawer, throw an error."
   (if (memq (org-element-type drawer) '(drawer property-drawer))
@@ -269,9 +269,9 @@ If BUFFER is non-nil, delete overlays in that buffer instead."
 ;; that the string can be dynamically computed.  For instance, we
 ;; could have the display string e.g. be the value of a particular
 ;; property instead of the same string all the time.
-;; REVIEW 2025-06-13: Perhaps rename ‘property-drawer-regexp to
-;; ‘property-drawer-key and ‘drawer-regexp to ‘drawer-name.
-;; TODO 2025-06-13: Is ‘property-drawer-regexp really sufficient for
+;; REVIEW 2025-06-13: Perhaps rename 'property-drawer-regexp to
+;; 'property-drawer-key and 'drawer-regexp to 'drawer-name.
+;; TODO 2025-06-13: Is 'property-drawer-regexp really sufficient for
 ;; all possible property drawers?  It seems strange that if one wanted
 ;; to match against all property drawers they would need to match
 ;; against any property drawer property key name.  Additionally, this
@@ -303,18 +303,18 @@ succeeds in matching against the first specification, all other
 specifications will be skipped over for this drawer.
 
 For this option to take effect, it must be set by customizing it or
-using `setopt’.  To verify that this option is in effect and to check
+using `setopt'.  To verify that this option is in effect and to check
 whether its behavior is as intended, see the value of
-`org-hide-drawers--display-strings-func’ after setting it.
+`org-hide-drawers--display-strings-func' after setting it.
 
 Each specification may have one of the following forms:
 
-    (\\=‘top-level-property-drawer DISPLAY-STRING)
+    (\\='top-level-property-drawer DISPLAY-STRING)
         Match against the top-level property drawer.  The top-level
         property drawer is the one at the very beginning of an org file.
 
-    (\\=‘property drawer-regexp DISPLAY-STRING REGEXP)
-    (\\=‘property drawer-regexp DISPLAY-STRING REGEXP CASE-FOLD)
+    (\\='property drawer-regexp DISPLAY-STRING REGEXP)
+    (\\='property drawer-regexp DISPLAY-STRING REGEXP CASE-FOLD)
         Use REGEXP to match against the key names of property drawers.
         This includes the top-level property drawer.  A key in a
         property drawer is the name of a property set in the drawer,
@@ -323,20 +323,20 @@ Each specification may have one of the following forms:
         or non-nil.  If it is not specified, then the value of
         `case-fold-search' will be used.
 
-    (\\=‘drawer-regexp)
+    (\\='drawer-regexp)
         Use REGEXP to match against the names of drawers.  CASE-FOLD is
         whether REGEXP is matched case-insensitively or not.  It is
         either nil or non-nil.  If it is not specified, then the value
         of `case-fold-search' will be used.
 
-    (\\=‘pred FUNCTION-SYMBOL DISPLAY-STRING)
-    (\\=‘pred FUNCTION-OBJECT DISPLAY-STRING)
+    (\\='pred FUNCTION-SYMBOL DISPLAY-STRING)
+    (\\='pred FUNCTION-OBJECT DISPLAY-STRING)
         Specify a function (either by name or as a lambda) that accepts
         a single argument: an org-element drawer or property drawer.
         Match against drawers or property drawers where this function
         returns non-nil.
 
-    (\\=‘all)
+    (\\='all)
         Match against every drawer or property drawer.  This is useful
         as the final inner list to match against every drawer or
         property drawer not already matched against from other
@@ -349,11 +349,11 @@ string if the user wishes to, for example, use strings with faces
 applied.  DISPLAY-STRING may also be nil to indicate that the drawer or
 property drawer matched against should not be hidden.
 
-Below are several example elisp forms that evaluate to possible values
-of this user option.  They illustrate the possible ways this user option
-may be set to achieve various behaviors:
+Below are several example emacs-lisp forms that evaluate to possible
+values of this user option.  They illustrate the possible ways this user
+option may be set to achieve various behaviors:
 
-    (list (list \\=’top-level-property drawer nil))
+    (list (list \\='top-level-property drawer nil))
         Do not hide the top-level property drawer.
 
     (list (list \\='property-drawer-regexp \" [Hidden...]\" \"ID\"))
@@ -379,11 +379,11 @@ may be set to achieve various behaviors:
             :END:
 
     (list (list \\='property-drawer-regexp nil \"ID\")
-          (list \\=’top-level-property drawer (propertize \"[Hidden...]\" \\='face \\='shadow))
+          (list \\='top-level-property drawer (propertize \"[Hidden...]\" \\='face \\='shadow))
           (list \\='drawer-regexp (propertize \"[Hidden...]\" \\='face \\='shadow) (rx (0+ anychar)))
           (list '\\=all (propertize \" #\" \\='face \\='shadow)))
         Hide the top-level property drawer unless it has the \“ID\”
-        property set, in which case keep it shown.  Also don’t hide any
+        property set, in which case keep it shown.  Also don't hide any
         other property drawer that sets the \“ID\” property.  Hide all
         regular drawers with a propertized \“[Hidden...]\”.  Then hide
         everything else with a propertized \“ #\”.
@@ -393,7 +393,7 @@ may be set to achieve various behaviors:
         always be hidden.  This is because in that scenario the
         top-level property drawer would succeed in matching against the
         first specification, so it would not reach the second
-        specification which would’ve kept it shown if the \“ID\”
+        specification which would've kept it shown if the \“ID\”
         property were present.)
 
     (list (list \\='property-drawer-regexp \"\" (rx (0+ anychar)))
