@@ -338,7 +338,7 @@ Each specification may have one of the following forms:
         Match against drawers or property drawers where this function
         returns non-nil.
 
-    (\\='all)
+    (\\='all DISPLAY-STRING)
         Match against every drawer or property drawer.  This is useful
         as the final inner list to match against every drawer or
         property drawer not already matched against from other
@@ -355,7 +355,7 @@ Below are several example emacs-lisp forms that evaluate to possible
 values of this user option.  They illustrate the possible ways this user
 option may be set to achieve various behaviors:
 
-    (list (list \\='top-level-property drawer nil))
+    (list (list \\='top-level-property-drawer nil))
         Do not hide the top-level property drawer.
 
     (list (list \\='property-drawer-regexp \" [Hidden...]\" \"ID\"))
@@ -381,7 +381,7 @@ option may be set to achieve various behaviors:
             :END:
 
     (list (list \\='property-drawer-regexp nil \"ID\")
-          (list \\='top-level-property drawer (propertize \"[Hidden...]\" \\='face \\='shadow))
+          (list \\='top-level-property-drawer (propertize \"[Hidden...]\" \\='face \\='shadow))
           (list \\='drawer-regexp (propertize \"[Hidden...]\" \\='face \\='shadow) (rx (0+ anychar)))
           (list '\\=all (propertize \" #\" \\='face \\='shadow)))
         Hide the top-level property drawer unless it has the \“ID\”

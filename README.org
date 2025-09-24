@@ -52,6 +52,26 @@ To see all commands available, do =C-h a org-hide-drawers- RET=, or =M-x apropos
 
 There is only one user option: ~org-hide-drawers-display-strings~. With this option alone users can specify exactly which drawers or property drawers to hide and what display strings to use for each hidden drawer. The docstring of ~org-hide-drawers-display-strings~ is comprehensive. It describes all possible ways to match against drawers and specify display strings as well as provides several examples to illustrate how users can customize the option to achieve various behaviors.
 
+To help users get started, below are several example values of ~org-hide-drawers-display-strings~:
+#+begin_src emacs-lisp
+  ;; Keep the top-level property drawer shown.
+  (setopt org-hide-drawers-display-strings
+          '((top-level-property-drawer nil)))
+
+  ;; Keep drawers matching the "^CONTENTS$" regexp shown.
+  (setopt org-hide-drawers-display-strings
+          '((drawer-regexp nil "^CONTENTS$")))
+
+  ;; Make all drawers and property drawers entirely hidden.
+  (setopt org-hide-drawers-display-strings
+          '((all "")))
+
+  ;; Visually replace property drawers with the "ID" property with the
+  ;; " [Hidden...]" string, with the shadow face applied.
+  (setopt org-hide-drawers-display-strings
+          '((property-drawer-regexp (propertize " [Hidden...]" 'face 'shadow) "ID")))
+#+end_src
+
 * Related packages
 :PROPERTIES:
 :CUSTOM_ID: related-packages
