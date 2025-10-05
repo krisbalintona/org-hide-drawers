@@ -235,6 +235,15 @@ element type object)."
                      ;; Therefore, we should avoid hiding whitespace
                      ;; proceeding a drawer
                      (skip-chars-backward "\n\t ")
+                     ;; To address issue #7
+                     ;; (https://github.com/krisbalintona/org-hide-drawers/issues/7),
+                     ;; when DISPLAY-STRING is an empty-string for a
+                     ;; regular drawer, we also include the newline
+                     ;; following that drawer to avoid the appearance
+                     ;; of an empty newline.
+                     (when (and (eq 'drawer (org-element-type drawer))
+                                (string-empty-p display-string))
+                       (forward-char 1))
                      (point))))
     (org-hide-drawers-hide-region begin end display-string)))
 

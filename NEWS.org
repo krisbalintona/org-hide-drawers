@@ -2,6 +2,10 @@
 
 * Unreleased
 
+** Changes
+
++ Users sometimes customize ~org-hide-drawers-display-strings~ such that regular drawers are replaced by an empty string, effectively making the drawer invisible. However, the previous behavior left behind the newline following these drawers, potentially causing confusion (see [[https://github.com/krisbalintona/org-hide-drawers/issues/7][issue #7]]). To avoid this, the current behavior is now to also include the newline following the invisible drawer in the overlay. This removes the display of the lingering newline, avoiding confusion.
+
 * 2.1.0 - 2025-09-24
 
 ** Changes
