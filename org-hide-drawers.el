@@ -168,7 +168,7 @@ If this function returns nil, DRAWER should not be hidden according to
 the value of `org-hide-drawers-display-strings'.
 
 If DRAWER is not an org drawer or property drawer, throw an error."
-  (if (memq (org-element-type drawer) '(drawer property-drawer))
+  (if (memq (org-element-type drawer) '(drawer property-drawer comment))
       (funcall org-hide-drawers--display-strings-func drawer)
     (error "`org-hide-drawers--determine-display-string' accepts only drawer and property drawer elements")))
 
@@ -256,7 +256,7 @@ Hide every drawer in the current buffer if
 drawer is passed to it."
   (interactive)
   (let ((ast (org-element-parse-buffer 'element nil)))
-    (org-element-map ast '(drawer property-drawer) #'org-hide-drawers-hide-drawer)))
+    (org-element-map ast '(drawer property-drawer comment) #'org-hide-drawers-hide-drawer)))
 
 ;;;###autoload
 (defun org-hide-drawers-delete-overlays (&optional buffer)
